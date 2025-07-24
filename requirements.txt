@@ -1,0 +1,8 @@
+streamlit
+streamlit-webrtc
+pandas
+numpy
+python-dotenv
+requests
+transformers
+torch

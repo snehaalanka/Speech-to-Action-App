@@ -16,7 +16,10 @@ def upload_audio(file_path):
             headers=headers,
             files={'file': f}
         )
-    return response.json()['upload_url']
+    print("Upload Response:", response.text)  # <-- Add this
+    response.raise_for_status()               # <-- Add this
+    return response.json().get('upload_url')
+
 
 # Request transcription
 def transcribe_audio(audio_url):
@@ -49,17 +52,14 @@ def transcribe_audio(audio_url):
         attempts += 1
         time.sleep(3)
     return "Transcription timed out."
-        
 
-# Run when the script is executed directly
-if __name__ == "__main__":
-    file_path = "file_path"  # Change this to your file name or path
+
+def get_transcription(file_path):
     print("Uploading audio...")
     audio_url = upload_audio(file_path)
     print("Audio uploaded successfully! URL:", audio_url)
 
     print("Transcribing audio...")
     transcription = transcribe_audio(audio_url)
-    print("\nTranscription result:")
-    print(transcription)
 
+    return transcription
